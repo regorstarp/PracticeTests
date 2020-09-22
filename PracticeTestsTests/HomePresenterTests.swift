@@ -12,49 +12,76 @@ import XCTest
 class HomePresenterTests: XCTestCase {
 
     var presenter: HomePresenter!
+    var view: HomeViewMock!
+    var service: HomeServiceMock!
     
-    override func setUpWithError() throws {
+    override func setUp() {
         presenter = HomePresenter()
+        view = HomeViewMock()
+        service = HomeServiceMock()
+        presenter.view = view
+        presenter.service = service
+    }
+    
+    func testPresenterCallsServiceGetHomeTitle() throws {
+        let getHomeTitleExpectation = XCTestExpectation(description: "Service requests the home title")
+        service.getHomeTitleExpectation = getHomeTitleExpectation
+        
+        presenter.fetchHomeTitle()
+        
+        XCTAssertTrue(service.didCallGetHomeTitle, "Presenter called service's didCallGetHomeTitle")
+        wait(for: [getHomeTitleExpectation], timeout: 0.2)
     }
 
     func testPresenterCallsViewUpdateTitleOnSuccess() throws {
-        let view = HomeViewMock()
-        view.didCallShowError = false
-        view.didCallUpdateTitle = false
-        presenter.view = view
-        
-        let service = HomeServiceMock()
-        service.didCallGetHomeTitle = false
         service.result = .success("Hello World")
-        presenter.service = service
+        let updateTitleExpectation = XCTestExpectation(description: "Presenter calls view's updateTitle")
+        view.updateTitleExpectation = updateTitleExpectation
         
         presenter.fetchHomeTitle()
         
-        XCTAssertTrue(service.didCallGetHomeTitle, "Presenter called service's didCallGetHomeTitle")
-        XCTAssertTrue(view.didCallUpdateTitle, "Presenter called view's didCallUpdateTitle")
-        XCTAssertEqual(view.title, "Hello World", "The view's title is correct")
+        wait(for: [updateTitleExpectation], timeout: 0.2)
     }
     
     func testPresenterCallsViewShowErrorOnFailure() throws {
-        let view = HomeViewMock()
-        view.didCallShowError = false
-        view.didCallUpdateTitle = false
-        presenter.view = view
-        
-        let service = HomeServiceMock()
-        service.didCallGetHomeTitle = false
         let error = ErrorMock.serverError
         service.result = .failure(error)
-        presenter.service = service
+        let showErrorExpectation = XCTestExpectation(description: "Presenter calls view's showError")
+        view.showErrorExpectation = showErrorExpectation
         
         presenter.fetchHomeTitle()
         
-        XCTAssertTrue(service.didCallGetHomeTitle, "Presenter called service's didCallGetHomeTitle")
-        XCTAssertTrue(view.didCallShowError, "Presenter called view's didCallShowError")
-        if case .serverError = view.error as? ErrorMock {
-            
+        wait(for: [showErrorExpectation], timeout: 0.2)
+    }
+    
+    func testViewRecievesCorrectTitleOnSuccess() throws {
+        service.result = .success("Hello World")
+        let waitForFetchHomeTitleExpectation = XCTestExpectation()
+        
+        presenter.fetchHomeTitle()
+        
+        let result = XCTWaiter.wait(for: [waitForFetchHomeTitleExpectation],
+                                    timeout: 0.2)
+        if result == XCTWaiter.Result.timedOut {
+            XCTAssertEqual(view.title, "Hello World")
         } else {
-            XCTFail("The view recieves the wrong error")
+            XCTFail("Delay interrupted")
+        }
+    }
+    
+    func testViewRecievesCorrectErrorOnFailure() throws {
+        let error = ErrorMock.serverError
+        service.result = .failure(error)
+        let waitForFetchHomeTitleExpectation = XCTestExpectation()
+        
+        presenter.fetchHomeTitle()
+        
+        let result = XCTWaiter.wait(for: [waitForFetchHomeTitleExpectation],
+                                    timeout: 0.2)
+        if result == XCTWaiter.Result.timedOut {
+            XCTAssertNotNil(view.error)
+        } else {
+            XCTFail("Delay interrupted")
         }
     }
 }

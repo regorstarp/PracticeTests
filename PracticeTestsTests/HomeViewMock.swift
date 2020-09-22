@@ -7,22 +7,23 @@
 //
 
 import Foundation
+import XCTest
 @testable import PracticeTests
 
 class HomeViewMock: HomeViewProtocol {
-    var didCallUpdateTitle: Bool = false
-    var didCallShowError: Bool = false
+    var updateTitleExpectation: XCTestExpectation?
+    var showErrorExpectation: XCTestExpectation?
     
     var error: Error?
     var title: String?
     
     func updateTitle(_ title: String) {
-        self.didCallUpdateTitle = true
+        updateTitleExpectation?.fulfill()
         self.title = title
     }
     
     func showError(_ error: Error) {
-        self.didCallShowError = true
+        showErrorExpectation?.fulfill()
         self.error = error
     }
     

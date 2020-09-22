@@ -19,6 +19,7 @@
 		DBAAA886251A6DFF00B44474 /* HomeServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAAA882251A6B0A00B44474 /* HomeServiceMock.swift */; };
 		DBAAA887251A6DFF00B44474 /* HomeViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAAA884251A6BC000B44474 /* HomeViewMock.swift */; };
 		DBAAA889251A6E0600B44474 /* ErrorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAAA888251A6E0600B44474 /* ErrorMock.swift */; };
+		DBAAA88B251A8FD700B44474 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAAA88A251A8FD700B44474 /* Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		DBAAA882251A6B0A00B44474 /* HomeServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServiceMock.swift; sourceTree = "<group>"; };
 		DBAAA884251A6BC000B44474 /* HomeViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewMock.swift; sourceTree = "<group>"; };
 		DBAAA888251A6E0600B44474 /* ErrorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMock.swift; sourceTree = "<group>"; };
+		DBAAA88A251A8FD700B44474 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				DBAAA882251A6B0A00B44474 /* HomeServiceMock.swift */,
 				DBAAA884251A6BC000B44474 /* HomeViewMock.swift */,
 				DB6B8529251A64390011DA08 /* HomePresenterTests.swift */,
+				DBAAA88A251A8FD700B44474 /* Test.swift */,
 				DB6B852B251A64390011DA08 /* Info.plist */,
 				DBAAA888251A6E0600B44474 /* ErrorMock.swift */,
 			);
@@ -229,6 +232,7 @@
 			files = (
 				DBAAA886251A6DFF00B44474 /* HomeServiceMock.swift in Sources */,
 				DBAAA887251A6DFF00B44474 /* HomeViewMock.swift in Sources */,
+				DBAAA88B251A8FD700B44474 /* Test.swift in Sources */,
 				DBAAA889251A6E0600B44474 /* ErrorMock.swift in Sources */,
 				DB6B852A251A64390011DA08 /* HomePresenterTests.swift in Sources */,
 			);

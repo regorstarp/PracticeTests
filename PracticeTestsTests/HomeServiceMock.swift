@@ -7,14 +7,17 @@
 //
 
 import Foundation
+import XCTest
 @testable import PracticeTests
 
 class HomeServiceMock: HomeServiceProtocol {
     var didCallGetHomeTitle: Bool = false
     var result: Result<String, Error> = .success("Home title")
+    var getHomeTitleExpectation: XCTestExpectation?
     
     func getHomeTitle(_ completion: @escaping (Result<String, Error>) -> ()) {
         didCallGetHomeTitle = true
+        getHomeTitleExpectation?.fulfill()
         completion(result)
     }
 }
